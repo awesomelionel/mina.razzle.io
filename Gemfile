@@ -9,10 +9,10 @@ gem 'haml'
 gem 'sass'
 gem 'mina'
 gem 'unicorn'
+gem 'rack-livereload'
 
 group :development do
   gem 'thin'
   gem 'pry'
   gem 'guard-livereload'
-  gem 'rack-livereload'
 end
