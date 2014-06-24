@@ -55,6 +55,8 @@ task :setup => :environment do
   #queue  %[echo "-----> Be sure to edit 'shared/config/database.yml'."]
 end
 
+set :unicorn_pid, "#{deploy_to}/tmp/pids/unicorn.pid"
+
 desc "Deploys the current version to the server."
 task :deploy => :environment do
   deploy do
@@ -70,7 +72,18 @@ task :deploy => :environment do
       queue "touch #{deploy_to}/tmp/restart.txt"
       queue "date >> #{deploy_to}/tmp/restart.txt"
     end
+
   end
+end
+
+task :restart do
+  queue "if [ -f #{unicorn_pid}]; then kill -USR2 `cat #{unicorn_pid}`; cd #{deploy_to}/current && bundle exec unicorn -c unicorn.rb -E production -D"
+  queue "sudo service nginx restart"
+end
+
+task :start do
+  queue "cd #{deploy_to}/current && bundle exec unicorn -c unicorn.rb -E production -D"
+  queue "sudo service nginx restart"
 end
 
 # For help in making your deploy script, see the Mina documentation:

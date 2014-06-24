@@ -8,6 +8,7 @@ gem 'sinatra-flash'
 gem 'haml'
 gem 'sass'
 gem 'mina'
+gem 'unicorn'
 
 group :development do
   gem 'thin'
