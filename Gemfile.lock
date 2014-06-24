@@ -26,6 +26,7 @@ GEM
       tilt
     http_parser.rb (0.6.0)
     jsmin (1.0.1)
+    kgio (2.9.2)
     listen (2.7.9)
       celluloid (>= 0.15.2)
       rb-fsevent (>= 0.9.3)
@@ -48,6 +49,7 @@ GEM
       rack
     rack-test (0.6.2)
       rack (>= 1.0)
+    raindrops (0.13.0)
     rake (10.3.2)
     rb-fsevent (0.9.4)
     rb-inotify (0.9.5)
@@ -79,6 +81,10 @@ GEM
     thor (0.19.1)
     tilt (1.4.1)
     timers (1.1.0)
+    unicorn (4.8.3)
+      kgio (~> 2.6)
+      rack
+      raindrops (~> 0.7)
 
 PLATFORMS
   ruby
@@ -95,3 +101,4 @@ DEPENDENCIES
   sinatra-contrib
   sinatra-flash
   thin
+  unicorn
