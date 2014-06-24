@@ -1,7 +1,7 @@
 @dir = '/var/www/mina.razzle.io/'
 
 worker_processes 2
-working_dir "#{@dir}/current"
+working_directory "#{@dir}/current"
 
 timeout 30
 
