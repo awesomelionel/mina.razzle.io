@@ -42,6 +42,12 @@ class App < Sinatra::Base
     "hello world!"
   end
 
+  get '/date' do
+    now = Time.now
+    now_str = now.strftime("%Y-%m-%d")
+    "The time now is #{now_str}"
+  end
+
 end
 
 #if __FILE__ == $0
