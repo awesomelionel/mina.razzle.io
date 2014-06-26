@@ -42,6 +42,10 @@ class App < Sinatra::Base
     "hello world!"
   end
 
+  get '/hello/:name' do
+    "hello, #{params[:name]}"
+  end
+
   get '/date' do
     now = Time.now
     now_str = now.strftime("%Y-%m-%d")

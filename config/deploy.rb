@@ -69,15 +69,17 @@ task :deploy => :environment do
     #invoke :'rails:assets_precompile'
 
     to :launch do
+      #restart
       queue "touch #{deploy_to}/tmp/restart.txt"
-      queue "date >> #{deploy_to}/tmp/restart.txt"
+      #queue "date >> #{deploy_to}/tmp/restart.txt"
     end
 
   end
 end
 
 task :restart do
-  queue "if [ -f #{unicorn_pid}]; then kill -USR2 `cat #{unicorn_pid}`; cd #{deploy_to}/current && bundle exec unicorn -c unicorn.rb -E production -D"
+  queue "cat #{unicorn_pid}"
+  queue "if [ -f #{unicorn_pid} ]; then kill -USR2 `cat #{unicorn_pid}`; else cd #{deploy_to}/current && bundle exec unicorn -c unicorn.rb -E production -D; fi"
   queue "sudo service nginx restart"
 end
 
