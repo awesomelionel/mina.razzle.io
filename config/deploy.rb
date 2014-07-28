@@ -69,23 +69,29 @@ task :deploy => :environment do
     #invoke :'rails:assets_precompile'
 
     to :launch do
-      #restart
+      restart
       queue "touch #{deploy_to}/tmp/restart.txt"
-      #queue "date >> #{deploy_to}/tmp/restart.txt"
+      queue "date >> #{deploy_to}/tmp/restart.txt"
     end
 
   end
 end
 
 task :restart do
-  queue "cat #{unicorn_pid}"
+  queue "old pid: `cat #{unicorn_pid}`"
   queue "if [ -f #{unicorn_pid} ]; then kill -USR2 `cat #{unicorn_pid}`; else cd #{deploy_to}/current && bundle exec unicorn -c unicorn.rb -E production -D; fi"
+  queue "new pid: `cat #{unicorn_pid}`"
   queue "sudo service nginx restart"
 end
 
 task :start do
   queue "cd #{deploy_to}/current && bundle exec unicorn -c unicorn.rb -E production -D"
   queue "sudo service nginx restart"
+end
+
+task :stop do
+  puts "STOPPING UNICORN SERVER"
+  queue "kill -s QUIT `cat #{unicorn_pid}`"
 end
 
 # For help in making your deploy script, see the Mina documentation:
